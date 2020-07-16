@@ -1,0 +1,17 @@
+{
+  "index_name": "fulltext",
+  "sitemap_urls": ["http://localhost:3001/sitemap.xml"],
+  "selectors": {
+    "lvl0": {
+      "selector": "nav selected",
+      "global": true
+    },
+    "lvl1": "main h1",
+    "lvl2": "main h2",
+    "lvl3": "main h3",
+    "lvl4": "main h4",
+    "lvl5": "main h5",
+    "text": "main p, main ol, main li"
+  },
+  "nb_hits": 4559
+}
