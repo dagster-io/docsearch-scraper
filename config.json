@@ -1,6 +1,8 @@
 {
   "index_name": "fulltext",
-  "sitemap_urls": ["http://localhost:3001/sitemap.xml"],
+  "sitemap_urls": [
+    "https://docs.dagster.io/sitemap.xml"
+  ],
   "selectors": {
     "lvl0": {
       "selector": "nav selected",
@@ -13,5 +15,5 @@
     "lvl5": "main h5",
     "text": "main p, main ol, main li"
   },
-  "nb_hits": 4559
+  "nb_hits": 3935
 }
