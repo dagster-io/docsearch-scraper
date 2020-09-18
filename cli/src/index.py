@@ -30,10 +30,24 @@ if not path.isfile(env_file):
 
     f = open(env_file, "w")
 
-    ans = input("What is your Algolia APPLICATION_ID: ")
+    if environ.get('NEXT_ALGOLIA_APP_ID'):
+        ans = input(
+            "What is your Algolia APPLICATION_ID [default: {}]: ".format(
+                environ.get('NEXT_ALGOLIA_APP_ID')
+            )
+        ) or environ.get('NEXT_ALGOLIA_APP_ID')
+    else:
+        ans = input("What is your Algolia APPLICATION_ID: ")
     f.write("APPLICATION_ID=" + ans + "\n")
 
-    ans = input("What is your Algolia API_KEY: ")
+    if environ.get('NEXT_ALGOLIA_ADMIN_KEY'):
+        ans = input(
+            "What is your Algolia API KEY [default: {}]: ".format(
+                environ.get('NEXT_ALGOLIA_ADMIN_KEY')
+            )
+        ) or environ.get('NEXT_ALGOLIA_ADMIN_KEY')
+    else:
+        ans = input("What is your Algolia API_KEY: ")
     f.write("API_KEY=" + ans + "\n")
 
     f.close()
@@ -51,7 +65,10 @@ if "APPLICATION_ID" not in environ or len(environ["APPLICATION_ID"]) == 0:
 if "API_KEY" not in environ or len(environ["API_KEY"]) == 0:
     CREDENTIALS = False
 
-if "APPLICATION_ID_PROD_INTERNAL" not in environ or len(environ["APPLICATION_ID_PROD_INTERNAL"]) == 0:
+if (
+    "APPLICATION_ID_PROD_INTERNAL" not in environ
+    or len(environ["APPLICATION_ID_PROD_INTERNAL"]) == 0
+):
     ADMIN = False
 
 cmds = []
@@ -84,11 +101,11 @@ def print_usage(no_ansi=False):
     printer("Options:", 2, no_ansi)
 
     if no_ansi:
-        printer("  " + "--help" + (" " * 4) + "Display help message", 4,
-                no_ansi)
+        printer("  " + "--help" + (" " * 4) + "Display help message", 4, no_ansi)
     else:
-        printer("  " + get_color(1) + "--help" + get_color() + (
-            " " * 4) + "Display help message", 4)
+        printer(
+            "  " + get_color(1) + "--help" + get_color() + (" " * 4) + "Display help message", 4
+        )
 
     printer("", 4, no_ansi)
 
@@ -116,12 +133,19 @@ def print_usage(no_ansi=False):
         for cmd in groups[key]:
             nb_spaces = longest_cmd_name + 2 - len(cmd.get_name())
             if no_ansi:
-                printer("  " + cmd.get_name() + (
-                    " " * nb_spaces) + cmd.get_description(), 4, no_ansi)
+                printer(
+                    "  " + cmd.get_name() + (" " * nb_spaces) + cmd.get_description(), 4, no_ansi
+                )
             else:
-                printer("  " + get_color(1) + cmd.get_name() + get_color() + (
-                    " " * nb_spaces) + cmd.get_description(),
-                        no_ansi)
+                printer(
+                    "  "
+                    + get_color(1)
+                    + cmd.get_name()
+                    + get_color()
+                    + (" " * nb_spaces)
+                    + cmd.get_description(),
+                    no_ansi,
+                )
 
 
 def find_command(name, cmds):
